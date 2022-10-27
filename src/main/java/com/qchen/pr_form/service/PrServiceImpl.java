@@ -35,10 +35,12 @@ public class PrServiceImpl implements PrService {
     public Pr updatePr(Long agentId, Long prId, Pr pr) {
         Pr prevPr = prRepository.findById(prId).get();
         LocalDate prevDate = prevPr.getCreateDate();
+        Long prevId = prevPr.getId();
         Agent agent = agentService.getAgent(agentId);
         if (prevPr.getAgent().getId() == agent.getId()) {
             pr.setAgent(agent);
             pr.setCreateDate(prevDate);
+            pr.setId(prevId);
             return prRepository.save(pr);
         }
         return pr;
@@ -53,5 +55,10 @@ public class PrServiceImpl implements PrService {
     @Override
     public List<Pr> getAllPrs() {
         return (List<Pr>) prRepository.findAll();
+    }
+
+    @Override
+    public List<Pr> getPrsByAgentId(Long agentId) {
+        return (List<Pr>) prRepository.findByAgentId(agentId);
     }
 }

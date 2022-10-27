@@ -10,4 +10,5 @@ public interface PrService {
     void deletePr(Long id);
     Pr updatePr(Long agentId, Long prId, Pr pr);
     List<Pr> getAllPrs();
+    List<Pr> getPrsByAgentId(Long agentId);
 }

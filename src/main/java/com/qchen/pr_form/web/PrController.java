@@ -17,6 +17,8 @@ import com.qchen.pr_form.entity.Pr;
 import com.qchen.pr_form.service.PrService;
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @AllArgsConstructor
@@ -51,6 +53,10 @@ public class PrController {
     public ResponseEntity<Pr> updatePr(@PathVariable Long agentId, @PathVariable Long prId, @RequestBody Pr pr ) {
         return new ResponseEntity<>(prService.updatePr(agentId, prId, pr), HttpStatus.OK);
     }
-    
+
+    @GetMapping("/agent/{agentId}")
+    public ResponseEntity<List<Pr>> getPrsByAgentId(@PathVariable Long agentId) {
+        return new ResponseEntity<>(prService.getPrsByAgentId(agentId), HttpStatus.OK);
+    }
     
 }
