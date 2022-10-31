@@ -29,9 +29,9 @@ public class ClientController {
         return new ResponseEntity<Client>(clientService.getClient(id), HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Client> saveClient(@RequestBody Client client) {
-        return new ResponseEntity<Client>(clientService.saveClient(client), HttpStatus.ACCEPTED);
+    @PostMapping("/agent/{agentId}")
+    public ResponseEntity<Client> saveClient(@RequestBody Client client, @PathVariable Long agentId) {
+        return new ResponseEntity<Client>(clientService.saveClient(client, agentId), HttpStatus.ACCEPTED);
         
     }
 

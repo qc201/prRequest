@@ -6,7 +6,7 @@ import com.qchen.pr_form.entity.Client;
 
 public interface ClientService {
     Client getClient(Long id);
-    Client saveClient(Client client);
+    Client saveClient(Client client, Long agentId);
     void deleteClient(Long id);
     List<Client> getClients();
     

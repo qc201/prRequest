@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.qchen.pr_form.entity.Agent;
 import com.qchen.pr_form.entity.Client;
+import com.qchen.pr_form.repository.AgentRepository;
 import com.qchen.pr_form.repository.ClientRepository;
 
 import lombok.AllArgsConstructor;
@@ -12,6 +14,7 @@ import lombok.AllArgsConstructor;
 @Service
 public class ClientServiceImpl implements ClientService{
     ClientRepository clientRepository;
+    AgentRepository agentRepository;
 
     @Override
     public Client getClient(Long id) {
@@ -19,7 +22,9 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
-    public Client saveClient(Client client) {
+    public Client saveClient(Client client, Long agentId) {
+        Agent agent = agentRepository.findById(agentId).get();
+        client.setAgent(agent);
         return clientRepository.save(client);
     }
 

@@ -29,16 +29,20 @@ public class Pr {
     @Column(name = "create_date", nullable = false)
     private LocalDate createDate;
 
-    // 確保這部分的變量是可以更改的
+    // will be updated
     @Column(name = "status_code", nullable = false)
     private int statusCode;
 
+    // can be updated
     @Column(name = "cost_code", nullable = false)
     private int costCode;
 
     // 因為這部分的內容我們無法通過path variable來獲得，我們需要通過form輸入來加入到裡面
     @Column(name = "reporter", nullable = false)
     private String reporter;
+
+    @Column(name = "title", nullable = false)
+    private String title;
     
     // pr/agent/{agent.id}/client/{client.id}/{pr.id}
     // pr/{pr.id}/agent/{agent.id}
@@ -50,6 +54,9 @@ public class Pr {
     @JoinColumn(name = "agent_id", referencedColumnName = "id")
     private Agent agent;
 
-    
+    //many prs can be relate to one client
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    private Client client;
     
 }
