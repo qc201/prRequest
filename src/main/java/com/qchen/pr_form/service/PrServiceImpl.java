@@ -3,15 +3,8 @@ package com.qchen.pr_form.service;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.hibernate.type.LocalDateType;
-import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.fge.jsonpatch.JsonPatch;
-import com.github.fge.jsonpatch.JsonPatchException;
+import org.springframework.stereotype.Service;
 import com.qchen.pr_form.entity.Agent;
 import com.qchen.pr_form.entity.Client;
 import com.qchen.pr_form.entity.Pr;
@@ -44,34 +37,34 @@ public class PrServiceImpl implements PrService {
         return prRepository.save(pr);
     }
 
+    // update pr require special authorization
     @Override
-    public Pr updatePr(Long agentId, Long clientId, Long prId, JsonPatch jsonPatch)
-            throws JsonParseException, JsonProcessingException, IllegalArgumentException, JsonPatchException {
-        // TODO Auto-generated method stub
-        return null;
+    public Pr updatePr(Long agentId, Long clientId, Long prId, Pr pr) {
+        Pr prevPr = getPr(prId);
+        prevPr.setCostCode(pr.getCostCode());
+        prevPr.setReporter(pr.getReporter());
+        prevPr.setStatusCode(pr.getStatusCode());
+        return prRepository.save(prevPr);   
     }
 
+    // delete pr require special authorization
     @Override
     public void deletePr(Long agentId, Long clientId, Long prId) {
-        // TODO Auto-generated method stub
-        
+        prRepository.deleteById(prId);
     }
 
     @Override
     public List<Pr> getPrsByAgentId(Long agentId) {
-        // TODO Auto-generated method stub
-        return null;
+        return prRepository.findByAgentId(agentId);
     }
 
     @Override
     public List<Pr> getPrsByClientId(Long clientId) {
-        // TODO Auto-generated method stub
-        return null;
+        return prRepository.findByClientId(clientId);
     }
 
     @Override
     public List<Pr> getAllPrs() {
-        // TODO Auto-generated method stub
-        return null;
+        return (List<Pr>)prRepository.findAll();
     }
 }
